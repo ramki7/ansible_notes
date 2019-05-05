@@ -1,0 +1,24 @@
+---
+- name: setup httpd
+  hosts: webserver
+  tasks:
+  - name: create sample file
+    file:
+      path: /tmp/sample.txt
+      owner: root
+      group: root
+      mode0: 0644
+      state: touch
+  - name: install apache
+    yum:
+      name: httpd
+      state: latest
+  - name:start apache server
+    service:
+      name: httpd
+      state: started
+  - name:place sample file apache doc directory
+    template:
+      src: index.html
+      dest: /var/www/html/
+  
